@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@Styles.Render("~/Content/home")
+
+<div class="row" style="margin-top:20px;margin-bottom:20px;">
+    <div class="col-md-offset-4 col-md-4">
+        <div class="input-group">
+            <span class="input-group-addon" id="sizing-addon3">Поиск</span>
+            <input type="text" class="form-control" placeholder="Введите название проекта..." aria-describedby="sizing-addon3">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default table3" aria-label="Left Align">
+                <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default list1" aria-label="Center Align">
+                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div id="spinner" class="spinner" style="display:none;">
+        <img id="img-spinner" src="~/Content/ajax-loader.gif" alt="Загрузка..." />
+    </div>
+</div>
+<div class="row" id="projects">
+
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                type: "GET",
+                url: "/api/Projects",
+                beforeSend: function () {
+                    showSpinner();
+                },
+                success: function (data) {
+                    hideSpinner();
+
+                    for (var item in data) {
+                        var htmlLt = '<div class="col-md-4"><div class="panel panel-default">' +
+        '<div class="panel-body"><h3>' + data[item].Name + '</h3>' +
+        '<p><a class="btn btn-default" href="/Projects/' + data[item].Id +
+        '">Подробнее &raquo;</a></p></div></div></div>';
+
+                        $('#projects').append(htmlLt);
+                        //console.log(data[item]);
+                    }
+                },
+                error: function () {
+                    hideSpinner();
+                }
+            });
+
+            function hideSpinner() {
+                $("#spinner").css("display", "none");
+            }
+
+            function showSpinner() {
+                $("#spinner").css("display", "inline");
+            }
+
+            $(".list1").click(function () {
+                console.log("List clicked");
+                $('#projects div.col-md-4').switchClass("col-md-4", "col-md-12", 500);
+            });
+
+            $(".table3").click(function () {
+                console.log("Table clicked");
+                $('#projects div.col-md-12').switchClass("col-md-12", "col-md-4", 500);
+            });
+        });
+    </script>
+}

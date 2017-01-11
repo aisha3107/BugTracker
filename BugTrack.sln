@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTrack", "BugTrack\BugTrack.csproj", "{0F1C3A8E-738A-43AE-B8E1-536C54709463}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BugTrack.Tests", "BugTrack.Tests\BugTrack.Tests.csproj", "{5C509061-1976-489A-A5D9-D17525163F25}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0F1C3A8E-738A-43AE-B8E1-536C54709463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F1C3A8E-738A-43AE-B8E1-536C54709463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F1C3A8E-738A-43AE-B8E1-536C54709463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F1C3A8E-738A-43AE-B8E1-536C54709463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C509061-1976-489A-A5D9-D17525163F25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C509061-1976-489A-A5D9-D17525163F25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C509061-1976-489A-A5D9-D17525163F25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C509061-1976-489A-A5D9-D17525163F25}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

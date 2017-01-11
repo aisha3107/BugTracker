@@ -1,0 +1,8 @@
+﻿.spinner {
+    position: relative;
+    left: 50%;
+    margin-left: -50px; /* half width of the spinner gif */
+    margin-top: 50px; /* half height of the spinner gif */
+    z-index: 1234;
+    overflow: auto;    
+}

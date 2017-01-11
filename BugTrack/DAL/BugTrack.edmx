@@ -1,0 +1,1170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BugTrackModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ProjectTaskId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Files">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TaskId" Type="int" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="256" />
+          <Property Name="FileContent" Type="varbinary(max)" />
+          <Property Name="Uploaded" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjectRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="ParentId" Type="int" />
+        </EntityType>
+        <EntityType Name="ProjectTaskHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ChangedOn" Type="datetime" Nullable="false" />
+          <Property Name="EstimatedEndsOn" Type="datetime" />
+          <Property Name="AssignedUserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="StartedOn" Type="datetime" />
+          <Property Name="EndedOn" Type="datetime" />
+          <Property Name="TaskTypeId" Type="int" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="StatusId" Type="int" />
+          <Property Name="ParentTaskId" Type="int" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjectTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="StartedOn" Type="datetime" Nullable="false" />
+          <Property Name="EndedOn" Type="datetime" />
+          <Property Name="Url" Type="nvarchar(max)" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="TaskTypeId" Type="int" Nullable="false" />
+          <Property Name="AssignedUserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="EstimatedEndsOn" Type="datetime" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="ParentTaskId" Type="int" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TaskTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserBoards">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsArchive" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserBoardTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserBoardId" Type="int" Nullable="false" />
+          <Property Name="TaskId" Type="int" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Comments_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Comments_dbo_ProjectTasks_ProjectTaskId">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="ProjectTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProjectTasks_dbo_Status_StatusId">
+          <End Role="Status" Type="Self.Status" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProjectTasks_dbo_TaskTypes_TaskTypeId">
+          <End Role="TaskTypes" Type="Self.TaskTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="TaskTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Files_ProjectTasks">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="0..1" />
+          <End Role="Files" Type="Self.Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Files">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectRoles_AspNetRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProjectRoles" Type="Self.ProjectRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectRoles_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProjectRoles" Type="Self.ProjectRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectRoles">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="Projects1" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Projects1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTaskHistory_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTaskHistory_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTaskHistory_ProjectTasks">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTaskHistory_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTaskHistory_TaskTypes">
+          <End Role="TaskTypes" Type="Self.TaskTypes" Multiplicity="0..1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="TaskTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTasks_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="AssignedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTasks_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTasks_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTasks_ProjectTasks">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="0..1" />
+          <End Role="ProjectTasks1" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks1">
+              <PropertyRef Name="ParentTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBoardTasks_ProjectTasks">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="0..1" />
+          <End Role="UserBoardTasks" Type="Self.UserBoardTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserBoardTasks">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBoardTasks_UserBoards">
+          <End Role="UserBoards" Type="Self.UserBoards" Multiplicity="1" />
+          <End Role="UserBoardTasks" Type="Self.UserBoardTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserBoards">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserBoardTasks">
+              <PropertyRef Name="UserBoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BugTrackModelStoreContainer">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectRoles" EntityType="Self.ProjectRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectTaskHistory" EntityType="Self.ProjectTaskHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectTasks" EntityType="Self.ProjectTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaskTypes" EntityType="Self.TaskTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserBoards" EntityType="Self.UserBoards" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserBoardTasks" EntityType="Self.UserBoardTasks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Comments_AspNetUsers" Association="Self.FK_Comments_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Comments_dbo_ProjectTasks_ProjectTaskId" Association="Self.FK_dbo_Comments_dbo_ProjectTasks_ProjectTaskId">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProjectTasks_dbo_Status_StatusId" Association="Self.FK_dbo_ProjectTasks_dbo_Status_StatusId">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProjectTasks_dbo_TaskTypes_TaskTypeId" Association="Self.FK_dbo_ProjectTasks_dbo_TaskTypes_TaskTypeId">
+            <End Role="TaskTypes" EntitySet="TaskTypes" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Files_ProjectTasks" Association="Self.FK_Files_ProjectTasks">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="Files" EntitySet="Files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectRoles_AspNetRoles" Association="Self.FK_ProjectRoles_AspNetRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="ProjectRoles" EntitySet="ProjectRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectRoles_Projects" Association="Self.FK_ProjectRoles_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectRoles" EntitySet="ProjectRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_Projects" Association="Self.FK_Projects_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Projects1" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTaskHistory_AspNetUsers" Association="Self.FK_ProjectTaskHistory_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTaskHistory_Projects" Association="Self.FK_ProjectTaskHistory_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTaskHistory_ProjectTasks" Association="Self.FK_ProjectTaskHistory_ProjectTasks">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTaskHistory_Status" Association="Self.FK_ProjectTaskHistory_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTaskHistory_TaskTypes" Association="Self.FK_ProjectTaskHistory_TaskTypes">
+            <End Role="TaskTypes" EntitySet="TaskTypes" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTasks_AspNetUsers" Association="Self.FK_ProjectTasks_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTasks_AspNetUsers1" Association="Self.FK_ProjectTasks_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTasks_Projects" Association="Self.FK_ProjectTasks_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTasks_ProjectTasks" Association="Self.FK_ProjectTasks_ProjectTasks">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="ProjectTasks1" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBoardTasks_ProjectTasks" Association="Self.FK_UserBoardTasks_ProjectTasks">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="UserBoardTasks" EntitySet="UserBoardTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBoardTasks_UserBoards" Association="Self.FK_UserBoardTasks_UserBoards">
+            <End Role="UserBoards" EntitySet="UserBoards" />
+            <End Role="UserBoardTasks" EntitySet="UserBoardTasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BugTrackModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ProjectRoles" Relationship="BugTrackModel.FK_ProjectRoles_AspNetRoles" FromRole="AspNetRoles" ToRole="ProjectRoles" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ProjectTaskHistory" Relationship="Self.FK_ProjectTaskHistory_AspNetUsers" FromRole="AspNetUsers" ToRole="ProjectTaskHistory" />
+          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_ProjectTasks_AspNetUsers" FromRole="AspNetUsers" ToRole="ProjectTasks" />
+          <NavigationProperty Name="ProjectTasks1" Relationship="Self.FK_ProjectTasks_AspNetUsers1" FromRole="AspNetUsers" ToRole="ProjectTasks" />
+          <NavigationProperty Name="Comments" Relationship="BugTrackModel.FK_Comments_AspNetUsers" FromRole="AspNetUsers" ToRole="Comments" />
+        </EntityType>
+        <EntityType Name="Comments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ProjectTaskId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_dbo_Comments_dbo_ProjectTasks_ProjectTaskId" FromRole="Comments" ToRole="ProjectTasks" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="BugTrackModel.FK_Comments_AspNetUsers" FromRole="Comments" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="Files">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TaskId" Type="Int32" />
+          <Property Name="FileName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="FileContent" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Uploaded" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_Files_ProjectTasks" FromRole="Files" ToRole="ProjectTasks" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <NavigationProperty Name="Projects1" Relationship="Self.FK_Projects_Projects" FromRole="Projects" ToRole="Projects1" />
+          <NavigationProperty Name="Projects2" Relationship="Self.FK_Projects_Projects" FromRole="Projects1" ToRole="Projects" />
+          <NavigationProperty Name="ProjectTaskHistory" Relationship="Self.FK_ProjectTaskHistory_Projects" FromRole="Projects" ToRole="ProjectTaskHistory" />
+          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_ProjectTasks_Projects" FromRole="Projects" ToRole="ProjectTasks" />
+          <NavigationProperty Name="ProjectRoles" Relationship="BugTrackModel.FK_ProjectRoles_Projects" FromRole="Projects" ToRole="ProjectRoles" />
+        </EntityType>
+        <EntityType Name="ProjectTaskHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ChangedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EstimatedEndsOn" Type="DateTime" Precision="3" />
+          <Property Name="AssignedUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="StartedOn" Type="DateTime" Precision="3" />
+          <Property Name="EndedOn" Type="DateTime" Precision="3" />
+          <Property Name="TaskTypeId" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StatusId" Type="Int32" />
+          <Property Name="ParentTaskId" Type="Int32" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_ProjectTaskHistory_AspNetUsers" FromRole="ProjectTaskHistory" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_ProjectTaskHistory_Projects" FromRole="ProjectTaskHistory" ToRole="Projects" />
+          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_ProjectTaskHistory_ProjectTasks" FromRole="ProjectTaskHistory" ToRole="ProjectTasks" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_ProjectTaskHistory_Status" FromRole="ProjectTaskHistory" ToRole="Status" />
+          <NavigationProperty Name="TaskTypes" Relationship="Self.FK_ProjectTaskHistory_TaskTypes" FromRole="ProjectTaskHistory" ToRole="TaskTypes" />
+        </EntityType>
+        <EntityType Name="ProjectTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="StartedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndedOn" Type="DateTime" Precision="3" />
+          <Property Name="Url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="TaskTypeId" Type="Int32" Nullable="false" />
+          <Property Name="AssignedUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EstimatedEndsOn" Type="DateTime" Precision="3" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ParentTaskId" Type="Int32" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_ProjectTasks_AspNetUsers" FromRole="ProjectTasks" ToRole="AspNetUsers" />
+          <NavigationProperty Name="AspNetUsers1" Relationship="Self.FK_ProjectTasks_AspNetUsers1" FromRole="ProjectTasks" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_dbo_Comments_dbo_ProjectTasks_ProjectTaskId" FromRole="ProjectTasks" ToRole="Comments" />
+          <NavigationProperty Name="Files" Relationship="Self.FK_Files_ProjectTasks" FromRole="ProjectTasks" ToRole="Files" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_ProjectTasks_Projects" FromRole="ProjectTasks" ToRole="Projects" />
+          <NavigationProperty Name="ProjectTaskHistory" Relationship="Self.FK_ProjectTaskHistory_ProjectTasks" FromRole="ProjectTasks" ToRole="ProjectTaskHistory" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_dbo_ProjectTasks_dbo_Status_StatusId" FromRole="ProjectTasks" ToRole="Status" />
+          <NavigationProperty Name="TaskTypes" Relationship="Self.FK_dbo_ProjectTasks_dbo_TaskTypes_TaskTypeId" FromRole="ProjectTasks" ToRole="TaskTypes" />
+          <NavigationProperty Name="ProjectTasks1" Relationship="Self.FK_ProjectTasks_ProjectTasks" FromRole="ProjectTasks" ToRole="ProjectTasks1" />
+          <NavigationProperty Name="ProjectTasks2" Relationship="Self.FK_ProjectTasks_ProjectTasks" FromRole="ProjectTasks1" ToRole="ProjectTasks" />
+          <NavigationProperty Name="UserBoardTasks" Relationship="Self.FK_UserBoardTasks_ProjectTasks" FromRole="ProjectTasks" ToRole="UserBoardTasks" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProjectTaskHistory" Relationship="Self.FK_ProjectTaskHistory_Status" FromRole="Status" ToRole="ProjectTaskHistory" />
+          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_dbo_ProjectTasks_dbo_Status_StatusId" FromRole="Status" ToRole="ProjectTasks" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TaskTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProjectTaskHistory" Relationship="Self.FK_ProjectTaskHistory_TaskTypes" FromRole="TaskTypes" ToRole="ProjectTaskHistory" />
+          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_dbo_ProjectTasks_dbo_TaskTypes_TaskTypeId" FromRole="TaskTypes" ToRole="ProjectTasks" />
+        </EntityType>
+        <EntityType Name="UserBoards">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsArchive" Type="Boolean" />
+          <NavigationProperty Name="UserBoardTasks" Relationship="Self.FK_UserBoardTasks_UserBoards" FromRole="UserBoards" ToRole="UserBoardTasks" />
+        </EntityType>
+        <EntityType Name="UserBoardTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="UserBoardId" Type="Int32" Nullable="false" />
+          <Property Name="TaskId" Type="Int32" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_UserBoardTasks_ProjectTasks" FromRole="UserBoardTasks" ToRole="ProjectTasks" />
+          <NavigationProperty Name="UserBoards" Relationship="Self.FK_UserBoardTasks_UserBoards" FromRole="UserBoardTasks" ToRole="UserBoards" />
+        </EntityType>
+        <Association Name="FK_ProjectTaskHistory_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTasks_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="AssignedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTasks_AspNetUsers1">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Comments_dbo_ProjectTasks_ProjectTaskId">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="ProjectTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Files_ProjectTasks">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="0..1" />
+          <End Role="Files" Type="Self.Files" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Files">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="Projects1" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Projects1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTaskHistory_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTasks_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTaskHistory_ProjectTasks">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTaskHistory_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="0..1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTaskHistory_TaskTypes">
+          <End Role="TaskTypes" Type="Self.TaskTypes" Multiplicity="0..1" />
+          <End Role="ProjectTaskHistory" Type="Self.ProjectTaskHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTaskHistory">
+              <PropertyRef Name="TaskTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProjectTasks_dbo_Status_StatusId">
+          <End Role="Status" Type="Self.Status" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProjectTasks_dbo_TaskTypes_TaskTypeId">
+          <End Role="TaskTypes" Type="Self.TaskTypes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks">
+              <PropertyRef Name="TaskTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectTasks_ProjectTasks">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="0..1" />
+          <End Role="ProjectTasks1" Type="Self.ProjectTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectTasks1">
+              <PropertyRef Name="ParentTaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBoardTasks_ProjectTasks">
+          <End Role="ProjectTasks" Type="Self.ProjectTasks" Multiplicity="0..1" />
+          <End Role="UserBoardTasks" Type="Self.UserBoardTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserBoardTasks">
+              <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBoardTasks_UserBoards">
+          <End Role="UserBoards" Type="Self.UserBoards" Multiplicity="1" />
+          <End Role="UserBoardTasks" Type="Self.UserBoardTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserBoards">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserBoardTasks">
+              <PropertyRef Name="UserBoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BugTrackEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" />
+          <EntitySet Name="Comments" EntityType="Self.Comments" />
+          <EntitySet Name="Files" EntityType="Self.Files" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" />
+          <EntitySet Name="ProjectTaskHistory" EntityType="Self.ProjectTaskHistory" />
+          <EntitySet Name="ProjectTasks" EntityType="Self.ProjectTasks" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TaskTypes" EntityType="Self.TaskTypes" />
+          <EntitySet Name="UserBoards" EntityType="Self.UserBoards" />
+          <EntitySet Name="UserBoardTasks" EntityType="Self.UserBoardTasks" />
+          <AssociationSet Name="FK_ProjectTaskHistory_AspNetUsers" Association="Self.FK_ProjectTaskHistory_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTasks_AspNetUsers" Association="Self.FK_ProjectTasks_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTasks_AspNetUsers1" Association="Self.FK_ProjectTasks_AspNetUsers1">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Comments_dbo_ProjectTasks_ProjectTaskId" Association="Self.FK_dbo_Comments_dbo_ProjectTasks_ProjectTaskId">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Files_ProjectTasks" Association="Self.FK_Files_ProjectTasks">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="Files" EntitySet="Files" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_Projects" Association="Self.FK_Projects_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Projects1" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTaskHistory_Projects" Association="Self.FK_ProjectTaskHistory_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTasks_Projects" Association="Self.FK_ProjectTasks_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTaskHistory_ProjectTasks" Association="Self.FK_ProjectTaskHistory_ProjectTasks">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTaskHistory_Status" Association="Self.FK_ProjectTaskHistory_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTaskHistory_TaskTypes" Association="Self.FK_ProjectTaskHistory_TaskTypes">
+            <End Role="TaskTypes" EntitySet="TaskTypes" />
+            <End Role="ProjectTaskHistory" EntitySet="ProjectTaskHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProjectTasks_dbo_Status_StatusId" Association="Self.FK_dbo_ProjectTasks_dbo_Status_StatusId">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProjectTasks_dbo_TaskTypes_TaskTypeId" Association="Self.FK_dbo_ProjectTasks_dbo_TaskTypes_TaskTypeId">
+            <End Role="TaskTypes" EntitySet="TaskTypes" />
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectTasks_ProjectTasks" Association="Self.FK_ProjectTasks_ProjectTasks">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="ProjectTasks1" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBoardTasks_ProjectTasks" Association="Self.FK_UserBoardTasks_ProjectTasks">
+            <End Role="ProjectTasks" EntitySet="ProjectTasks" />
+            <End Role="UserBoardTasks" EntitySet="UserBoardTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBoardTasks_UserBoards" Association="Self.FK_UserBoardTasks_UserBoards">
+            <End Role="UserBoards" EntitySet="UserBoards" />
+            <End Role="UserBoardTasks" EntitySet="UserBoardTasks" />
+          </AssociationSet>
+          <EntitySet Name="ProjectRoles" EntityType="BugTrackModel.ProjectRoles" />
+          <AssociationSet Name="FK_ProjectRoles_AspNetRoles" Association="BugTrackModel.FK_ProjectRoles_AspNetRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="ProjectRoles" EntitySet="ProjectRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectRoles_Projects" Association="BugTrackModel.FK_ProjectRoles_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="ProjectRoles" EntitySet="ProjectRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_AspNetUsers" Association="BugTrackModel.FK_Comments_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Comments" EntitySet="Comments" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ProjectRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="AspNetRoles" Relationship="BugTrackModel.FK_ProjectRoles_AspNetRoles" FromRole="ProjectRoles" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Projects" Relationship="BugTrackModel.FK_ProjectRoles_Projects" FromRole="ProjectRoles" ToRole="Projects" />
+        </EntityType>
+        <Association Name="FK_ProjectRoles_AspNetRoles">
+          <End Type="BugTrackModel.AspNetRoles" Role="AspNetRoles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BugTrackModel.ProjectRoles" Role="ProjectRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectRoles_Projects">
+          <End Type="BugTrackModel.Projects" Role="Projects" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="BugTrackModel.ProjectRoles" Role="ProjectRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectRoles">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_AspNetUsers">
+          <End Type="BugTrackModel.AspNetUsers" Role="AspNetUsers" Multiplicity="0..1" />
+          <End Type="BugTrackModel.Comments" Role="Comments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comments">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BugTrackModelStoreContainer" CdmEntityContainer="BugTrackEntities">
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="BugTrackModel.AspNetRoles">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="BugTrackModel.AspNetUsers">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="BugTrackModel.Comments">
+              <MappingFragment StoreEntitySet="Comments">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ProjectTaskId" ColumnName="ProjectTaskId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Files">
+            <EntityTypeMapping TypeName="BugTrackModel.Files">
+              <MappingFragment StoreEntitySet="Files">
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileContent" ColumnName="FileContent" />
+                <ScalarProperty Name="Uploaded" ColumnName="Uploaded" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="BugTrackModel.Projects">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectTaskHistory">
+            <EntityTypeMapping TypeName="BugTrackModel.ProjectTaskHistory">
+              <MappingFragment StoreEntitySet="ProjectTaskHistory">
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ChangedOn" ColumnName="ChangedOn" />
+                <ScalarProperty Name="EstimatedEndsOn" ColumnName="EstimatedEndsOn" />
+                <ScalarProperty Name="AssignedUserId" ColumnName="AssignedUserId" />
+                <ScalarProperty Name="StartedOn" ColumnName="StartedOn" />
+                <ScalarProperty Name="EndedOn" ColumnName="EndedOn" />
+                <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="ParentTaskId" ColumnName="ParentTaskId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectTasks">
+            <EntityTypeMapping TypeName="BugTrackModel.ProjectTasks">
+              <MappingFragment StoreEntitySet="ProjectTasks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="StartedOn" ColumnName="StartedOn" />
+                <ScalarProperty Name="EndedOn" ColumnName="EndedOn" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="TaskTypeId" ColumnName="TaskTypeId" />
+                <ScalarProperty Name="AssignedUserId" ColumnName="AssignedUserId" />
+                <ScalarProperty Name="EstimatedEndsOn" ColumnName="EstimatedEndsOn" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ParentTaskId" ColumnName="ParentTaskId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="BugTrackModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BugTrackModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaskTypes">
+            <EntityTypeMapping TypeName="BugTrackModel.TaskTypes">
+              <MappingFragment StoreEntitySet="TaskTypes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserBoards">
+            <EntityTypeMapping TypeName="BugTrackModel.UserBoards">
+              <MappingFragment StoreEntitySet="UserBoards">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IsArchive" ColumnName="IsArchive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserBoardTasks">
+            <EntityTypeMapping TypeName="BugTrackModel.UserBoardTasks">
+              <MappingFragment StoreEntitySet="UserBoardTasks">
+                <ScalarProperty Name="UserBoardId" ColumnName="UserBoardId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectRoles">
+            <EntityTypeMapping TypeName="BugTrackModel.ProjectRoles">
+              <MappingFragment StoreEntitySet="ProjectRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
