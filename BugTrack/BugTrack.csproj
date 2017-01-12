@@ -342,6 +342,7 @@
     <Content Include="img\folder.png" />
     <Content Include="img\jsfiddle01.png" />
     <Content Include="img\jsfiddle02.png" />
+    <Content Include="img\loading.gif" />
     <Content Include="img\preview.png" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />

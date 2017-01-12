@@ -4,17 +4,13 @@
     <title></title>
     <meta charset="utf-8" />
     <link href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css" rel="stylesheet" />
-    
     <link rel="stylesheet" type="text/css" href="/Content/angular.treeview.css">
-
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.min.js"></script>
-
     <script type="text/javascript" src="/Scripts/angular.treeview.js"></script>
-
     <link type="text/css" rel="stylesheet" href="../Content/w3.css">
 
     <style>
-        thead {
+        /*thead {
             color: grey;
         }
 
@@ -22,7 +18,7 @@
             color: green;
         }
 
-        /*table {
+        table {
             border: 1px solid black;
             margin-left: 30px;
             margin-right: 30px;
@@ -37,104 +33,130 @@
             border-bottom:1px solid #ddd;
         }*/
 
+        body{
+            margin: 0 auto; padding: 0; font-family: Georgia, serif; background-color: lightgrey;
+        }
+        .container{
+            margin: 5px auto; width: 95%; background-color: #ffffff; text-align: left;
+            border: 1px solid black;
+        }
         #projectsView {
             /*vertical-align*/
+            float:left; width:210px; margin-left:0px; background-color: #29FDAF;
+            /*border: 1px solid blue;*/
+        }
+        .main{
+            clear: both; width:100%; 
+        }
+        .Wrapper{
+            float:left; width:100%;
+            border: 1px solid black;
+        }
+        .Mid{
+            margin: 0 175px 0 220px;
+            position:relative;
+            /*border: 1px solid green;*/
+        }
+        .Mid.loading:after{
+            position:absolute;
+            content: '';
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background: #fff, url(/img/loading.gif) no-repeat center;
+        }
+        .RightCol{
+            /*border: 1px solid grey;*/
+            float:right; width:170px; margin-left:-170px; background-color: #DAF29F;
         }
     </style>
 
-    
 </head>
 
 <body ng-app="myApp">
-
-    <div class="main" ng-controller="MainController">
-
-        <div class="container">
-            <div>
-            </div>
-            <div ng-repeat="product in data" class="col-md-6">
-                
-                <!--<div class="thumbnail">
+    <div class="container">
+            <div class="main" ng-controller="MainController">
+                <div class="Wrapper">
+                    <div class="w3-container">
+                        <div ng-repeat="product in data" class="col-md-6">
+                            <!--<div class="thumbnail">
                     <p class="title">{{product.Id}}</p>
                     <p class="title">{{product.Name}}</p>
                     <p class="title">{{product.Nodes.length}}</p>
                     <div ng-repeat="node in product.Nodes" class="thumbnail col-md-6">
                         {{node.Name}}
-                        <br />                        
+                        <br />
                     </div>
-                </div>-->                
-                <br />  
-            </div>
+                </div>-->
+                        </div>
 
-
-            <!--<div>
+                        <!--<div>
                 <children ng-repeat="elem in data" item="elem"></children>
             </div>-->
+                    </div>
 
 
-        </div>
-        <!--<div class="container">
-            <div ng-repeat="node in data">
-                <div ng-repeat="node in node.Nodes">
-                    {{node.Name}}
-                    <treecontrol class="tree-classic" tree-model="treedata" options="opts">
-                        label: {{node.label}} ({{node.id}})
-                    </treecontrol>
+                    <!--взято с http://www.dotnetawesome.com/2016/08/treeview-in-angularjs-application.html   -->
+                    <div id="projectsView" class="w3-container">
+                        <h2>treeview</h2>
+                        <span>Selected Node : <strong>{{selectedNode.Name}}</strong></span>
+                        <br />
+                        <br />
+                        <div data-angular-treeview="true"
+                             data-tree-id="abc"
+                             data-tree-model="data"
+                             data-node-id="Name"
+                             data-node-label="Name"
+                             data-node-children="Nodes">
+                        </div>                        
+                    </div>
 
-                    <div ng-include="projectdetails.html"></div>
+                    <div class="w3-container RightCol">
+                        fgfgf
+                        fgfg
+                        fgfg
+                        <br />
+                        {{selectedNode.Id}}
+                    </div>
+
+
+                    <div class="w3-container Mid" ng-class="{loading:loading}">
+                        <table st-table="rowCollection" class="w3-table-all">
+                            <thead>
+                                <tr>
+                                    <!--<th>AAA</th>-->
+                                    <th st-sort="ID">ID</th>
+                                    <th st-sort="Title">Title</th>
+                                    <th st-sort="StatusName">StatusName</th>
+                                    <th st-sort="TaskType">TaskType</th>
+                                    <!--<th st-sort="Start">Start</th>
+                                    <th st-sort="End">End</th>                                    
+                                    <th st-sort="AssignedUserName">AssignedUserName</th>-->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="value in dataTasks">
+                                    <!--<td cs-select="row"></td>-->
+                                    <td>{{value.Id}}</td>
+                                    <td>{{value.Title}}</td>
+                                    <td>{{value.StatusName}}</td>
+                                    <td>{{value.TaskTypeName}}</td>
+                                    <!--<td>{{value.Start | date}}</td>
+                                    <td>{{value.End | date}}</td>
+                                    <td>{{value.AssignedUserName}}</td>-->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+
                 </div>
-            </div>
-        </div>-->
-
-        <h2>treeview</h2>
-        <!--взято с http://www.dotnetawesome.com/2016/08/treeview-in-angularjs-application.html   -->
-        <div id="projectsView">
-            <span>Selected Node : {{currentNode.Name}}</span>
-            <div data-angular-treeview="true"
-                 data-tree-id="abc"
-                 data-tree-model="data"
-                 data-node-id="Name"
-                 data-node-label="Name"
-                 data-node-children="Nodes">
-            </div>
-        </div>
-
-
-
-
-
-        <div id="taskTable">
-            <table st-table="rowCollection" class="w3-table-all">
-                <thead>
-                    <tr>
-                        <th>AAA</th>
-                        <th st-sort="ID">ID</th>
-                        <th st-sort="Title">Title</th>
-                        <th st-sort="Start">Start</th>
-                        <th st-sort="End">End</th>
-                        <th st-sort="StatusName">StatusName</th>
-                        <th st-sort="TaskType">TaskType</th>
-                        <th st-sort="AssignedUserName">AssignedUserName</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="value in dataTasks">
-                        <td cs-select="row"></td>
-                        <td>{{value.Id}}</td>
-                        <td>{{value.Title}}</td>
-                        <td>{{value.Start | date}}</td>
-                        <td>{{value.End | date}}</td>
-                        <td>{{value.StatusName}}</td>
-                        <td>{{value.TaskType}}</td>
-                        <td>{{value.AssignedUserName}}</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
-
-    
-
     <!-- Modules -->
     <script src="app.js"></script>
 

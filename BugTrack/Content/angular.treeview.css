@@ -22,7 +22,7 @@ div[data-tree-model] ul {
 }
 
 div[data-tree-model] li {
-  position: relative;
+  /*position: relative;*/
   padding: 0 0 0 20px;
   line-height: 20px;
 }

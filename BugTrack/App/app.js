@@ -45,30 +45,6 @@ app.component('children', {
 //});
 
 
-//function Light($scope) {
-//    $scope.treedata = createSubTree(3, 4, "");
-//    $scope.showSelected = function (sel) {
-//        $scope.selectedNode = sel;
-//    };
-//};
-
-//function Children($scope) {
-//    $scope.treedata = [
-//        {
-//            id: "id1", label: "Node 1", links: [
-//               { id: "id1.1", label: "Node 1.1", links: {} },
-//               { id: "id1.2", label: "Node 1.1", links: {} }
-//            ]
-//        },
-//        { id: "id2", label: "Node 2", links: [] },
-//        { id: "id3", label: "Node 3", links: [] },
-//        { id: "id4", label: "Node 4", links: [] }
-//    ];
-//    $scope.opts = {
-//        nodeChildren: "links"
-//    };
-//};
-
 //angular.bootstrap(document, ['myApp']);
 
 
@@ -76,6 +52,8 @@ app.component('children', {
 //сделано:
 //чтобы разворачивались компоненты
 //вывести таблицу задач
+//залить на Git
+//компоновка
 
 //сделать:
 //чтобы нажимались проекты и отображалась таблица задач соответсвующая
