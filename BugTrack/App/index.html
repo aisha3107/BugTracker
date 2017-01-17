@@ -8,6 +8,13 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.1/angular.min.js"></script>
     <script type="text/javascript" src="/Scripts/angular.treeview.js"></script>
     <link type="text/css" rel="stylesheet" href="../Content/w3.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
+    <script type="text/javascript" src="../Scripts/jquery-1.6.1.min.js"></script>
+    <script type="text/javascript" src="../Scripts/jquery.easyui.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
 
     <style>
         /*thead {
@@ -33,42 +40,85 @@
             border-bottom:1px solid #ddd;
         }*/
 
-        body{
-            margin: 0 auto; padding: 0; font-family: Georgia, serif; background-color: lightgrey;
+        body {
+            margin: 0 auto;
+            padding: 0;
+            font-family: Georgia, serif;
+            background-color: lightgrey;
         }
-        .container{
-            margin: 5px auto; width: 95%; background-color: #ffffff; text-align: left;
+
+        .container {
+            margin: 5px auto;
+            width: 95%;
+            background-color: #ffffff;
+            text-align: left;
             border: 1px solid black;
         }
+
         #projectsView {
             /*vertical-align*/
-            float:left; width:210px; margin-left:0px; background-color: #29FDAF;
+            float: left;
+            width: 210px;
+            margin-left: 0px;
+            background-color: #29FDAF;
             /*border: 1px solid blue;*/
         }
-        .main{
-            clear: both; width:100%; 
+
+        .main {
+            clear: both;
+            width: 100%;
         }
-        .Wrapper{
-            float:left; width:100%;
+
+        .Wrapper {
+            float: left;
+            width: 100%;
             border: 1px solid black;
         }
-        .Mid{
+
+        .Mid {
             margin: 0 175px 0 220px;
-            position:relative;
+            position: relative;
+            width: 900px;
             /*border: 1px solid green;*/
         }
-        .Mid.loading:after{
-            position:absolute;
-            content: '';
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background: #fff, url(/img/loading.gif) no-repeat center;
-        }
-        .RightCol{
+
+            .Mid.loading:after {
+                position: absolute;
+                content: '';
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: #fff, url(/img/loading.gif) no-repeat center;
+            }
+
+        .RightCol {
             /*border: 1px solid grey;*/
-            float:right; width:170px; margin-left:-170px; background-color: #DAF29F;
+            float: right;
+            width: 330px;
+            margin-left: -170px;
+            background-color: #DAF29F;
+        }
+        /*.table-nested {
+            background: #fff;
+            border: 2px solid #444;
+            text-align: left;
+        }*/
+        .animate-if {
+            background: white;
+            border: 1px solid black;
+            padding: 10px;
+        }
+
+        #child td {
+            margin-left: 15px;
+            /*text-align:center;*/
+        }
+
+        #child2 td {
+            margin-left: 30px;
+            /*text-align:right;*/
+            text-orientation: 50px;
         }
     </style>
 
@@ -76,84 +126,210 @@
 
 <body ng-app="myApp">
     <div class="container">
-            <div class="main" ng-controller="MainController">
-                <div class="Wrapper">
-                    <div class="w3-container">
-                        <div ng-repeat="product in data" class="col-md-6">
-                            <!--<div class="thumbnail">
-                    <p class="title">{{product.Id}}</p>
-                    <p class="title">{{product.Name}}</p>
-                    <p class="title">{{product.Nodes.length}}</p>
-                    <div ng-repeat="node in product.Nodes" class="thumbnail col-md-6">
-                        {{node.Name}}
-                        <br />
+        <div class="main" ng-controller="MainController">
+            <div class="Wrapper">
+                <div class="w3-container">
+                    <div ng-repeat="product in data" class="col-md-6">
+                        <!--<div class="thumbnail">
+                            <p class="title">{{product.Id}}</p>
+                            <p class="title">{{product.Name}}</p>
+                            <p class="title">{{product.Nodes.length}}</p>
+                            <div ng-repeat="node in product.Nodes" class="thumbnail col-md-6">
+                                {{node.Name}}
+                                <br />
+                            </div>
+                        </div>-->
                     </div>
-                </div>-->
-                        </div>
-
-                        <!--<div>
-                <children ng-repeat="elem in data" item="elem"></children>
-            </div>-->
-                    </div>
-
-
-                    <!--взято с http://www.dotnetawesome.com/2016/08/treeview-in-angularjs-application.html   -->
-                    <div id="projectsView" class="w3-container">
-                        <h2>treeview</h2>
-                        <span>Selected Node : <strong>{{selectedNode.Name}}</strong></span>
-                        <br />
-                        <br />
-                        <div data-angular-treeview="true"
-                             data-tree-id="abc"
-                             data-tree-model="data"
-                             data-node-id="Name"
-                             data-node-label="Name"
-                             data-node-children="Nodes">
-                        </div>                        
-                    </div>
-
-                    <div class="w3-container RightCol">
-                        fgfg
-                        fgfg
-                        <br />
-                        {{selectedNode.Id}}
-                    </div>
-
-                    <div class="w3-container Mid" ng-class="{loading:loading}">
-                        <table st-table="rowCollection" class="w3-table-all">
-                            <thead>
-                                <tr>
-                                    <!--<th>AAA</th>-->
-                                    <th st-sort="ID">ID</th>
-                                    <th st-sort="Title">Title</th>
-                                    <th st-sort="StatusName">StatusName</th>
-                                    <th st-sort="TaskType">TaskType</th>
-                                    <!--<th st-sort="Start">Start</th>
-                                    <th st-sort="End">End</th>                                    
-                                    <th st-sort="AssignedUserName">AssignedUserName</th>-->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="value in dataTasks">
-                                    <!--<td cs-select="row"></td>-->
-                                    <td>{{value.Id}}</td>
-                                    <td>{{value.Title}}</td>
-                                    <td>{{value.StatusName}}</td>
-                                    <td>{{value.TaskTypeName}}</td>
-                                    <!--<td>{{value.Start | date}}</td>
-                                    <td>{{value.End | date}}</td>
-                                    <td>{{value.AssignedUserName}}</td>-->
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
-
-
-
                 </div>
+
+                <!--div>
+                    <children ng-repeat="elem in data" item="elem"></children>
+                </div>-->
+            </div>
+
+
+            <!--взято с http://www.dotnetawesome.com/2016/08/treeview-in-angularjs-application.html   -->
+            <div id="projectsView" class="w3-container">
+                <h2>treeview</h2>
+                <span>Selected Node : <strong>{{selectedNode.Name}}</strong></span>
+                <br />
+                <br />
+                <div data-angular-treeview="true"
+                     data-tree-id="abc"
+                     data-tree-model="data"
+                     data-node-id="Name"
+                     data-node-label="Name"
+                     data-node-children="Nodes">
+                </div>
+            </div>
+
+            <div class="w3-container RightCol">
+                здесь форма для заполнения
+                <br />
+                {{selectedNode.Id}}
+
+                <br />
+                <br />
+                count: {{count}}
+                <br />
+
+                <form action="action_page.php">
+                    <table id="taskForm" style="line-height:40px">
+                        <tr>
+                            <td>Задание:</td>
+                            <td><input type="text" name="title" style="width:235px" class="form-control" ng-model="title" /></td>
+                            
+                        </tr>
+                        <tr>
+                            <td>Статус:</td>
+                            <td>
+                                <select name="satusName" ng-model="satusName" class="form-control">
+                                    <option value="doing">В работе</option>
+                                    <option value="analystTesting">На тестировании у аналитика</option>
+                                    <option value="tested">Протестировано</option>
+                                    <option value="accepted">Принято заказчиком</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Тип:</td>
+                            <td>
+                                <select name="taskType" style="width:235px" class="form-control" ng-model="taskType">
+                                    <option value="feature">Feature</option>
+                                    <option value="bug">Bug</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                    <button ng-click="remove()" class="btn btn-primary">Delete</button>
+                </form>
+
+
+            </div>
+
+            <div class="w3-container Mid" ng-class="{loading:loading}">
+                <div>
+                    <button ng-click="addNew()" class="btn btn-small btn-primary">create new task</button>
+                </div>
+                <table st-table="rowCollection" class="w3-table-all table-nested">
+                    <thead>
+                        <tr>
+                            <!--<th>AAA</th>-->
+                            <th st-sort="ID">ID</th>
+                            <th st-sort="Title">Title</th>
+                            <th st-sort="StatusName">StatusName</th>
+                            <th st-sort="TaskType">TaskType</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="value in dataTasks">
+                            <!--[0].Nodes-->
+                            <!--<td cs-select="row"></td>-->
+                            <td>{{value.Id}}</td>
+                            <td>{{value.Title}}</td>
+                            <td>{{value.StatusName}}</td>
+                            <td>{{value.TaskTypeName}}</td>
+                            <td><button ng-click="editUser()" class="btn btn-small btn-primary">edit</button></td>
+                        </tr>
+
+                        <tr id="child" ng-repeat="value in dataTasks[0].Nodes">
+                            <td>{{value.Id}}</td>
+                            <td>{{value.Title}}</td>
+                            <td>{{value.StatusName}}</td>
+                            <td>{{value.TaskTypeName}}</td>
+                            <td><a ng-click="editUser()" class="btn btn-small btn-primary">edit</a></td>
+                        </tr>
+
+                        <tr id="child2" ng-repeat="value in dataTasks[0].Nodes[0].Nodes">
+                            <td>{{value.Id}}</td>
+                            <td>{{value.Title}}</td>
+                            <td>{{value.StatusName}}</td>
+                            <td>{{value.TaskTypeName}}</td>
+                            <td><a ng-click="editUser()" class="btn btn-small btn-primary">edit</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br />
+            <br />
+            
+            <br />
+            <!--<button ng-click="doGreeting(greeting)()">text</button>
+            <button ng-click="myFunction()">text2</button>-->
+            <!--<div ng-repeat="value in dataTasks">
+            </div>-->
+            <!--<script>
+                function myFunction() {
+                    alert("hello everybody!");
+                }
+            </script>-->
+
+            <form class="form-horizontal" role="form" ng-submit="addRow()">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Name</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="name"
+                               ng-model="name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Employees</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="employees"
+                               ng-model="employees" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Headoffice</label>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" name="headoffice"
+                               ng-model="headoffice" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div style="padding-left:110px">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                    </div>
+                </div>
+            </form>
+            <br />
+            <div>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Employees
+                        </th>
+                        <th>
+                            Head Office
+                        </th>
+                    </tr>
+                    <tr ng-repeat="company in companies">
+                        <td>
+                            {{company.name}}
+                        </td>
+                        <td>
+                            {{company.employees}}
+                        </td>
+                        <td>
+                            {{company.headoffice}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
         </div>
+
+
+
+
+    </div>
     </div>
     <!-- Modules -->
     <script src="app.js"></script>

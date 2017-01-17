@@ -29,3 +29,5 @@
 /// <reference path="../app/app2.js" />
 /// <reference path="angular.treeview.js" />
 /// <reference path="../app/sttable.js" />
+/// <reference path="jquery.easyui.min.js" />
+/// <reference path="jquery-1.6.1.min.js" />

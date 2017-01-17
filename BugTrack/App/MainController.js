@@ -114,22 +114,112 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
                 method: 'GET',
                 url: '/api/ProjectTasks/GetTasksHierarchyByProjectId?id=' + $scope.abc.currentNode.Id
             }).then(function (response) {
-                console.log(response.data);
+                console.log("sooooop");
+                console.log(response.data[0].Nodes);
                 $scope.dataTasks = response.data[0].Nodes;
                 // this callback will be called asynchronously
                 // when the response is available
             }, function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
-            }).finally(function(){
+            }).finally(function () {
                 $scope.loading = false;
             });
         }
     }, false);
 
 
+    $scope.count = 0;
+    $scope.addNew = function () {
+        alert("Add new called!");
+        $scope.count++;
 
-    
+        //$scope.dataTasks[0].Nodes.push({ "Title": "Aisha", "StatusId": 1, "TaskTypeId": 1 });//добавляется на второй уровень
+
+        $scope.dataTasks[0].Nodes.push({
+            "Title": "First record",
+            //"AssignedUserId": "3c91cc20-87ef-4935-ae4e-9d976cdc6c48",
+            //"AssignedUserName": "yerlanyr@gmail.com",
+            //"AuthorUserName": "yerlanyr@gmail.com",
+            //"CreatedOn": "2016-12-21T11:44:11.627",
+            //"Description": "",
+            //"EndedOn": "2016-12-23T11:44:11.627",
+            //"EstimatedEndsOn": "2016-12-23T11:44:11.627",
+            //"Id": 5,
+            //"ProjectId": 3,
+            //"ProjectName":"Личный кабинет - Производственные показатели",
+            //"StatusId": 1,
+            //"TaskTypeId": 1,
+            //"StartedOn": "2016-12-21T11:44:11.627",
+            "TaskTypeName": "Feature",
+            "StatusName": "В работе"
+        });
+
+        //$scope.companies.push({ 'title': $scope.title, 'StatusId': 2, 'TaskTypeId': 2 });
+        //$scope.title = '';
+        //$scope.satusName = '';
+        //$scope.taskType = '';
+    };
+
+    $scope.editUser = function () {
+        $scope.greeting = 'Hello, World!';
+        $scope.count++;
+        $scope.doGreeting = function (greeting) {
+            $window.alert(greeting);
+        };
+    };
+
+
+
+    $scope.companies = [
+                    {
+                        'name': 'Infosys Technologies',
+                        'employees': 125000,
+                        'headoffice': 'Bangalore'
+                    },
+                    {
+                    	'name': 'Cognizant Technologies',
+                    	'employees': 100000,
+                    	'headoffice': 'Bangalore'
+                    },
+	                {
+	                    'name': 'Wipro',
+	                    'employees': 115000,
+	                    'headoffice': 'Bangalore'
+	                },
+		            {
+		                'name': 'Tata Consultancy Services (TCS)',
+		                'employees': 150000,
+		                'headoffice': 'Bangalore'
+		            },
+			        {
+			            'name': 'HCL Technologies',
+			            'employees': 90000,
+			            'headoffice': 'Noida'
+			        },
+    ];
+    $scope.addRow = function () {
+        $scope.companies.push({ 'name': $scope.name, 'employees': $scope.employees, 'headoffice': $scope.headoffice });
+        $scope.name = '';
+        $scope.employees = '';
+        $scope.headoffice = '';
+    };
+
+    //$scope.Add = function () {
+    //    // Do nothing if no state is entered (blank)
+    //    if (!$scope.newState)
+    //        return;
+    //    // Add to main records
+    //    $scope.records.push({
+    //        state: $scope.newState,
+    //        price: $scope.newPrice,
+    //        tax: $scope.newTax,
+    //        include: false
+    //    });
+    //    // See $Scope.Reset...
+    //    $scope.Reset();
+    //}
+
 
 
     //console.log($scope.myColl);
@@ -137,18 +227,7 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
 }]);
 
 
-//(function (f) {
-//    f.module("angularTreeview", []).directive("treeModel", function ($compile) {
-//        return {
-//            restrict: "A", link: function (b, h, c) {
-//                var a = c.treeId, g = c.treeModel, e = c.nodeLabel || "label", d = c.nodeChildren || "children", e = '<ul><li data-ng-repeat="node in ' + g + '"><i class="collapsed" data-ng-show="node.' + d + '.length && node.collapsed" data-ng-click="' + a + '.selectNodeHead(node)"></i><i class="expanded" data-ng-show="node.' + d + '.length && !node.collapsed" data-ng-click="' + a + '.selectNodeHead(node)"></i><i class="normal" data-ng-hide="node.' +
-//                d + '.length"></i> <span data-ng-class="node.selected" data-ng-click="' + a + '.selectNodeLabel(node)">{{node.' + e + '}}</span><div data-ng-hide="node.collapsed" data-tree-id="' + a + '" data-tree-model="node.' + d + '" data-node-id=' + (c.nodeId || "id") + " data-node-label=" + e + " data-node-children=" + d + "></div></li></ul>"; a && g && (c.angularTreeview && (b[a] = b[a] || {}, b[a].selectNodeHead = b[a].selectNodeHead || function (a) { a.collapsed = !a.collapsed }, b[a].selectNodeLabel = b[a].selectNodeLabel || function (c) {
-//                    b[a].currentNode && b[a].currentNode.selected &&
-//                    (b[a].currentNode.selected = void 0); c.selected = "selected"; b[a].currentNode = c
-//                }), h.html('').append($compile(e)(b)))
-//            }
-//        }
-//    })
-//})(angular);
+
+
 
 
