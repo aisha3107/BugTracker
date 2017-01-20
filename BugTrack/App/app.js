@@ -15,6 +15,7 @@ app.component('children', {
 
 
 
+
 //нужно для того чтобы динамику таблицы добавить(сортировка, поиск)
 // from https://lorenzofox3.github.io/smart-table-website/
 //

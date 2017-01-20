@@ -99,11 +99,7 @@
             margin-left: -170px;
             background-color: #DAF29F;
         }
-        /*.table-nested {
-            background: #fff;
-            border: 2px solid #444;
-            text-align: left;
-        }*/
+
         .animate-if {
             background: white;
             border: 1px solid black;
@@ -126,7 +122,7 @@
 
 <body ng-app="myApp">
     <div class="container">
-        <div class="main" ng-controller="MainController">
+        <div class="main" ng-controller="MainController as $ctrl">
             <div class="Wrapper">
                 <div class="w3-container">
                     <div ng-repeat="product in data" class="col-md-6">
@@ -163,6 +159,9 @@
                 </div>
             </div>
 
+
+
+
             <div class="w3-container RightCol">
                 здесь форма для заполнения
                 <br />
@@ -170,70 +169,96 @@
 
                 <br />
                 <br />
-                count: {{count}}
+                Edit of index: {{$ctrl.value.Id}}
                 <br />
 
-                <form action="action_page.php">
+                <form class="form-horizontal" role="form" ng-submit="addNew()">
                     <table id="taskForm" style="line-height:40px">
                         <tr>
                             <td>Задание:</td>
-                            <td><input type="text" name="title" style="width:235px" class="form-control" ng-model="title" /></td>
-                            
+                            <td>
+                                <input type="text" name="Title" style="width:235px"
+                                       class="form-control" ng-model="Title" />
+                            </td>
+
                         </tr>
                         <tr>
                             <td>Статус:</td>
                             <td>
-                                <select name="satusName" ng-model="satusName" class="form-control">
-                                    <option value="doing">В работе</option>
-                                    <option value="analystTesting">На тестировании у аналитика</option>
-                                    <option value="tested">Протестировано</option>
-                                    <option value="accepted">Принято заказчиком</option>
+                                <select name="StatusName"
+                                        ng-model="$ctrl.statusId"
+                                        class="form-control"
+                                        ng-options="item.id as item.text for item in $ctrl.statuses">
+                                    <option value>Выберите статус...</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td>Тип:</td>
                             <td>
-                                <select name="taskType" style="width:235px" class="form-control" ng-model="taskType">
-                                    <option value="feature">Feature</option>
-                                    <option value="bug">Bug</option>
+                                <select name="TaskTypeName"
+                                        style="width:235px"
+                                        class="form-control"
+                                        ng-model="$ctrl.taskTypeId"
+                                        ng-options="item.id as item.text for item in $ctrl.types">
+                                    <option value>Выберите тип...</option>
                                 </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ParentID:</td>
+                            <td>
+                                <input type="text" name="ParentTaskId" style="width:235px"
+                                       class="form-control" ng-model="ParentTaskId" />
                             </td>
                         </tr>
                     </table>
 
                     <input type="submit" value="Submit" class="btn btn-primary" />
-                    <button ng-click="remove()" class="btn btn-primary">Delete</button>
                 </form>
-
-
             </div>
 
+
+            <div>
+                    <input type="button" value="Create new task" style="margin-left:694px; width:200px" />
+            </div>
+            <br />
             <div class="w3-container Mid" ng-class="{loading:loading}">
-                <div>
+                <!--<div>
                     <button ng-click="addNew()" class="btn btn-small btn-primary">create new task</button>
-                </div>
+                </div>-->
                 <table st-table="rowCollection" class="w3-table-all table-nested">
                     <thead>
                         <tr>
-                            <!--<th>AAA</th>-->
                             <th st-sort="ID">ID</th>
                             <th st-sort="Title">Title</th>
                             <th st-sort="StatusName">StatusName</th>
                             <th st-sort="TaskType">TaskType</th>
                             <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!--<tr>
+                            <td data-angular-treeview="true"
+                                data-tree-id="def"
+                                data-tree-model="data2"
+                                data-node-id="Name"
+                                data-node-label="Name"
+                                data-node-children="Nodes"></td>
+                        </tr>-->
                         <tr ng-repeat="value in dataTasks">
-                            <!--[0].Nodes-->
-                            <!--<td cs-select="row"></td>-->
-                            <td>{{value.Id}}</td>
+                           <td>{{value.Id}}</td>
                             <td>{{value.Title}}</td>
                             <td>{{value.StatusName}}</td>
                             <td>{{value.TaskTypeName}}</td>
                             <td><button ng-click="editUser()" class="btn btn-small btn-primary">edit</button></td>
+                            <td><button ng-click="remove()" class="btn btn-primary">Delete</button></td>
+                            <!--<td><table>
+                                <tr>dfdgfgh</tr>
+                                </table></td>-->
                         </tr>
+
 
                         <tr id="child" ng-repeat="value in dataTasks[0].Nodes">
                             <td>{{value.Id}}</td>
@@ -241,6 +266,7 @@
                             <td>{{value.StatusName}}</td>
                             <td>{{value.TaskTypeName}}</td>
                             <td><a ng-click="editUser()" class="btn btn-small btn-primary">edit</a></td>
+                            <td><button ng-click="remove()" class="btn btn-primary">Delete</button></td>
                         </tr>
 
                         <tr id="child2" ng-repeat="value in dataTasks[0].Nodes[0].Nodes">
@@ -249,26 +275,17 @@
                             <td>{{value.StatusName}}</td>
                             <td>{{value.TaskTypeName}}</td>
                             <td><a ng-click="editUser()" class="btn btn-small btn-primary">edit</a></td>
+                            <td><button ng-click="remove()" class="btn btn-primary">Delete</button></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <br />
-            <br />
-            
-            <br />
-            <!--<button ng-click="doGreeting(greeting)()">text</button>
-            <button ng-click="myFunction()">text2</button>-->
-            <!--<div ng-repeat="value in dataTasks">
-            </div>-->
-            <!--<script>
-                function myFunction() {
-                    alert("hello everybody!");
-                }
-            </script>-->
 
-            <form class="form-horizontal" role="form" ng-submit="addRow()">
+
+
+            <!--<form
+            class="form-horizontal" role="form" ng-submit="addRow()">
                 <div class="form-group">
                     <label class="col-md-2 control-label">Name</label>
                     <div class="col-md-4">
@@ -295,9 +312,10 @@
                         <input type="submit" value="Submit" class="btn btn-primary" />
                     </div>
                 </div>
-            </form>
+            </form>-->
             <br />
-            <div>
+            <br />
+            <!--<div>
                 <table class="table">
                     <tr>
                         <th>
@@ -322,15 +340,11 @@
                         </td>
                     </tr>
                 </table>
-            </div>
-            
+            </div>-->
+
         </div>
-
-
-
-
     </div>
-    </div>
+
     <!-- Modules -->
     <script src="app.js"></script>
 

@@ -7,6 +7,22 @@
 })();
 
 app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
+    var self = this;
+    this.statusId = null;
+    this.taskTypeId = null;
+    var selectedNode = null;
+
+    this.statuses = [
+        { id: 1, text: 'В работе' },
+        { id: 2, text: 'На тестировании у аналитика' },
+        { id: 3, text: 'Протестировано' },
+        { id: 4, text: 'Принято заказчиком' }
+    ];
+
+    this.types = [
+        { id: 1, text: 'Feature' },
+        { id: 2, text: 'Bug' }
+    ];
 
     $http({
         method: 'GET',
@@ -19,9 +35,108 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
         // this callback will be called asynchronously
         // when the response is available
     }, function errorCallback(response) {
-        // called asynchronously if an error occurs
+        // called asynchronously if an erroroccurs
         // or server returns response with an error status.
     });
+
+
+    $scope.$watch('abc.currentNode', function (newObj, oldObj) {
+        if ($scope.abc && angular.isObject($scope.abc.currentNode)) {
+            console.log('Node Selected!!');
+            console.log($scope.abc.currentNode);
+            $scope.selectedNode = $scope.abc.currentNode;
+            selectedNode = $scope.selectedNode;
+            //selectedNode = $scope.selectedNode[0].Nodes[0].Id;
+            //selectedNodeInt = parseInt(selectedNode);
+            //selectedNode = Integer.valueOf((String) $scope.selectedNode);
+            //selectedNodeInt = Integer.valueOf((String) selectedNode);
+            $scope.loading = true;
+            $http({
+                method: 'GET',
+                url: '/api/ProjectTasks/GetTasksHierarchyByProjectId?id=' + $scope.abc.currentNode.Id
+            }).then(function (response) {
+                console.log("sooooop");
+                console.log(response.data[0].Nodes);
+                $scope.dataTasks = response.data[0].Nodes;
+                selectedNode = $scope.dataTasks[0].ProjectId;
+                //selectedTask = $scope.dataTasks[0].Nodes; //not right
+                console.log("dfg: " + selectedTask);
+                //selectedNode = parseInt($scope.dataTasks);
+                //selectedNode = $scope.dataTasks[1].Nodes[0].Id;
+                console.log("Selected node in the GET request: " + selectedNode);
+                // this callback will be called asynchronously
+                // when the response is available
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            }).finally(function () {
+                $scope.loading = false;
+            });
+        }
+    }, false);
+
+    //$scope.$watch('def.currentNode', function (newObj, oldObj) {
+    //    if ($scope.def && angular.isObject($scope.abc.currentNode)) {
+    //        console.log('Task Selected!!');
+    //        console.log($scope.def.currentNode);
+    //        $scope.selectedTask = $scope.def.currentNode;
+    //        selectedTask= $scope.selectedTask;
+    //        $scope.loading = true;
+    //        $http({
+    //            method: 'GET',
+    //            url: '/api/ProjectTasks/GetTasksHierarchyByProjectId?id=' + $scope.def.currentNode.Id
+    //        }).then(function (response) {
+    //            console.log("sooooop");
+    //            console.log(response.data2[0].Nodes);
+    //            $scope.dataTasks = response.data2[0].Nodes;
+    //            selectedTask = $scope.dataTasks[0].ProjectId;
+    //            console.log("Selected task in the GET request: " + selectedTask);
+    //        }, function errorCallback(response) {
+    //       }).finally(function () {
+    //            $scope.loading = false;
+    //        });
+    //    }
+    //}, false);
+
+
+
+    $scope.count = 0;
+    $scope.addNew = function () {
+        alert("Add new called!");
+        $scope.count++;
+        
+        console.log("Selected node in creation: "+ selectedNode);
+        var data = {
+            Title: $scope.Title,
+            StatusId: self.statusId,
+            TaskTypeId: self.taskTypeId,
+            StartedOn: "2017-01-18T16:28:00+06:00",
+            ProjectId: selectedNode
+        };
+
+        //$scope.dataTasks[0].Nodes.push();
+        //$scope.Title = '';
+        //$scope.StatusName = '';
+        //$scope.TaskTypeName = '';
+
+        $http.post('/api/ProjectTasks', data)
+            .then(function (response) {
+                console.log(response)
+            }, function (response) {
+                console.log(response)
+            });
+    };
+
+    
+
+    $scope.editUser = function (Id) {
+        $scope.greeting = 'Hello, World!';
+        $scope.count++;        
+    };
+
+    $scope.remove = function (Id) {
+
+    };
 
     $scope.title = "something";
     $scope.myColl = [
@@ -104,72 +219,6 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
         { "label": "Guest", "id": "role3", "children": [] }
     ];
 
-    $scope.$watch('abc.currentNode', function (newObj, oldObj) {
-        if ($scope.abc && angular.isObject($scope.abc.currentNode)) {
-            console.log('Node Selected!!');
-            console.log($scope.abc.currentNode);
-            $scope.selectedNode = $scope.abc.currentNode;
-            $scope.loading = true;
-            $http({
-                method: 'GET',
-                url: '/api/ProjectTasks/GetTasksHierarchyByProjectId?id=' + $scope.abc.currentNode.Id
-            }).then(function (response) {
-                console.log("sooooop");
-                console.log(response.data[0].Nodes);
-                $scope.dataTasks = response.data[0].Nodes;
-                // this callback will be called asynchronously
-                // when the response is available
-            }, function errorCallback(response) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            }).finally(function () {
-                $scope.loading = false;
-            });
-        }
-    }, false);
-
-
-    $scope.count = 0;
-    $scope.addNew = function () {
-        alert("Add new called!");
-        $scope.count++;
-
-        //$scope.dataTasks[0].Nodes.push({ "Title": "Aisha", "StatusId": 1, "TaskTypeId": 1 });//добавляется на второй уровень
-
-        $scope.dataTasks[0].Nodes.push({
-            "Title": "First record",
-            //"AssignedUserId": "3c91cc20-87ef-4935-ae4e-9d976cdc6c48",
-            //"AssignedUserName": "yerlanyr@gmail.com",
-            //"AuthorUserName": "yerlanyr@gmail.com",
-            //"CreatedOn": "2016-12-21T11:44:11.627",
-            //"Description": "",
-            //"EndedOn": "2016-12-23T11:44:11.627",
-            //"EstimatedEndsOn": "2016-12-23T11:44:11.627",
-            //"Id": 5,
-            //"ProjectId": 3,
-            //"ProjectName":"Личный кабинет - Производственные показатели",
-            //"StatusId": 1,
-            //"TaskTypeId": 1,
-            //"StartedOn": "2016-12-21T11:44:11.627",
-            "TaskTypeName": "Feature",
-            "StatusName": "В работе"
-        });
-
-        //$scope.companies.push({ 'title': $scope.title, 'StatusId': 2, 'TaskTypeId': 2 });
-        //$scope.title = '';
-        //$scope.satusName = '';
-        //$scope.taskType = '';
-    };
-
-    $scope.editUser = function () {
-        $scope.greeting = 'Hello, World!';
-        $scope.count++;
-        $scope.doGreeting = function (greeting) {
-            $window.alert(greeting);
-        };
-    };
-
-
 
     $scope.companies = [
                     {
@@ -198,27 +247,6 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
 			            'headoffice': 'Noida'
 			        },
     ];
-    $scope.addRow = function () {
-        $scope.companies.push({ 'name': $scope.name, 'employees': $scope.employees, 'headoffice': $scope.headoffice });
-        $scope.name = '';
-        $scope.employees = '';
-        $scope.headoffice = '';
-    };
-
-    //$scope.Add = function () {
-    //    // Do nothing if no state is entered (blank)
-    //    if (!$scope.newState)
-    //        return;
-    //    // Add to main records
-    //    $scope.records.push({
-    //        state: $scope.newState,
-    //        price: $scope.newPrice,
-    //        tax: $scope.newTax,
-    //        include: false
-    //    });
-    //    // See $Scope.Reset...
-    //    $scope.Reset();
-    //}
 
 
 
