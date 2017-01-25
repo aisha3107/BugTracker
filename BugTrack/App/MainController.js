@@ -49,6 +49,7 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
     
 
     this.processData = function (data) {
+
         for (var i = 0; i < data.length; i++) {
             data[i].subTasks = [];
             if (data[i].ParentTaskId != null) {
@@ -62,16 +63,17 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
             }
         }
         var tmp = [];
-        var tmp2 = [];
 
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].ParentTaskId == null) {
-                console.log('data[i].ProjectId', data[i].ProjectId);
-                console.log('self.selectedNode', self.selectedNode);
-                if (data[i].ProjectId == self.selectedNode) {
-                    for (var j = 0; j < data.length; j++) {
-                        tmp.push(data[j]);
-                    }
+        if (self.selectedNode != null) {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].ParentTaskId == null) {
+                    //console.log('data[i].ProjectId', data[i].ProjectId);
+                    //console.log('self.selectedNode', self.selectedNode);
+
+                    ////writes all tasks for the corresponding project 
+                    if (data[i].ProjectId == self.selectedNode) {
+                        tmp.push(data[i]);
+                    }                    
                 }
             }
         }
@@ -81,26 +83,30 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
 
     $http.get('/api/ProjectTasks')
             .then(function (response) {
-                //console.log("data2: " + response);
                 self.data2 = self.processData(response.data);
+                console.log("data2: ", self.data2);
 
                 //calling for all tasks in a list
                 self.ParentTasks = [];
+                self.ParaTasks = [];
 
                 for (var i = 0; i < response.data.length; i++) {
                     self.ParentTasks.push({
                         id: response.data[i].Id,
                         title: response.data[i].Title
-                    });
+                    });                    
                 }
-                //console.log(self.ParentTasks);
-
-                //console.log("hi: " , self.data2);
-                //console.log("rod: ", self.ParentTasks);
+                //for (var i = 0; i < response.data.length; i++) {
+                //    self.ParaTasks.push({
+                //        id: response.data[i].Id,
+                //        title: response.data[i].Title
+                //    });
+                //}                
+                //console.log(self.ParaTasks);
 
                 //$digest();
             }, function (response) {
-                //console.log(response)
+                console.log(response)
             });
 
 
@@ -114,22 +120,22 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
             self.selectedNode = $scope.selectedNode.Id;
             console.log('sel', self.selectedNode);
             $scope.loading = true;
-            $http({
+            /*$http({
                 method: 'GET',
-            //    url: '/api/ProjectTasks/GetTasksHierarchyByProjectId?id=' + $scope.abc.currentNode.Id
-            //}).then(function (response) {
-            //    console.log("sooooop");
-            //    console.log(response.data[0].Nodes);
-            //    $scope.dataTasks = response.data[0].Nodes;
-            //    console.log($scope.dataTasks)
-            //    selectedNode = $scope.dataTasks[0].ProjectId;
-                //    console.log("Selected node in the GET request: " + selectedNode);
-                url: '/api/ProjectTasks/GetProjectTasksByProjectId?projectId=' + $scope.abc.currentNode.Id
+                url: '/api/ProjectTasks/GetTasksHierarchyByProjectId?id=' + $scope.abc.currentNode.Id
             }).then(function (response) {
-                //console.log("sooooop");
-                //console.log(response.data);
-                $scope.dataTasks = response.data;
-                //console.log($scope.dataTasks)
+                console.log("sooooop");
+                console.log(response.data[0].Nodes);
+                $scope.dataTasks = response.data[0].Nodes;
+                console.log($scope.dataTasks)
+                selectedNode = $scope.dataTasks[0].ProjectId;
+                //    console.log("Selected node in the GET request: " + selectedNode);
+            //    url: '/api/ProjectTasks/GetProjectTasksByProjectId?projectId=' + $scope.abc.currentNode.Id
+            //}).then(function (response) {
+            //    //console.log("sooooop");
+            //    //console.log(response.data);
+            //    $scope.dataTasks = response.data;
+            //    //console.log($scope.dataTasks)
 
                 //self.selectedNode = $scope.dataTasks.ProjectId;
 
@@ -140,29 +146,24 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
                 // or server returns response with an error status.
             }).finally(function () {
                 $scope.loading = false;
+            });*/
+
+            $http.get('/api/ProjectTasks/GetTasksHierarchyByProjectId?id=' + $scope.abc.currentNode.Id)
+            .then(function (response) {
+                console.log("data2: " + response);
+                self.data2 = self.processData(response.data);
+
+                //calling for all tasks
+                self.ParentTasks = [];
+                for (var i = 0; i < response.data.length; i++) {
+                    self.ParentTasks.push({
+                        id: response.data[i].Id,
+                        title: response.data[i].Title
+                    });
+                }
+            }, function (response) {
+                console.log(response)
             });
-
-            //$http.get('/api/ProjectTasks/GetTasksHierarchyByProjectId?id=' + $scope.abc.currentNode.Id)
-            //.then(function (response) {
-            //    console.log("data2: " + response);
-            //    self.data2 = self.processData(response.data);
-            //    //self.CorrespondingTasks = self.processData(response.data[0].subTasks);
-
-
-            //    //calling for all tasks
-            //    self.ParentTasks = [];
-            //    for (var i = 0; i < response.data.length; i++) {
-            //        self.ParentTasks.push({
-            //            id: response.data[i].Id,
-            //            title: response.data[i].Title
-            //        });
-            //    }
-            //    //console.log(self.ParentTasks);
-
-            //    //$digest();
-            //}, function (response) {
-            //    console.log(response)
-            //});
         }
     }, false);
 
