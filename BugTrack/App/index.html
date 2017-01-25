@@ -153,8 +153,6 @@
             <!--взято с http://www.dotnetawesome.com/2016/08/treeview-in-angularjs-application.html   -->
             <div id="projectsView" class="w3-container">
                 <h2>treeview</h2>
-                <span>Selected Node : <strong>{{selectedNode.Name}}</strong></span>
-                <br />
                 <br />
                 <div data-angular-treeview="true"
                      data-tree-id="abc"
@@ -163,6 +161,8 @@
                      data-node-label="Name"
                      data-node-children="Nodes">
                 </div>
+                <br />
+                <span>Selected Node : <strong>{{selectedNode.Name}}</strong></span>
             </div>
 
 
@@ -256,7 +256,7 @@
                     <button ng-click="addNew()" class="btn btn-small btn-primary">create new task</button>
                 </div>-->
 
-                <!--<table st-table="rowCollection" class="w3-table-all table-nested">
+                <table st-table="rowCollection" class="w3-table-all table-nested">
                     <thead>
                         <tr>
                             <th st-sort="ID">ID</th>
@@ -297,7 +297,7 @@
                             <td><button ng-click="remove()" class="btn btn-primary">Delete</button></td>
                         </tr>
                     </tbody>
-                </table>-->
+                </table>
 
                 <br />
                 <div data-angular-treeview="true"
