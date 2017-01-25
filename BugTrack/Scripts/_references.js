@@ -26,7 +26,6 @@
 /// <reference path="angular.min.js" />
 /// <reference path="../app/app.js" />
 /// <reference path="../app/maincontroller.js" />
-/// <reference path="../app/app2.js" />
 /// <reference path="angular.treeview.js" />
 /// <reference path="../app/sttable.js" />
 /// <reference path="jquery.easyui.min.js" />

@@ -127,6 +127,8 @@ namespace BugTrack.Controllers
         [ResponseType(typeof(void))]
         public IHttpActionResult PutProjectTasks(int id, ProjectTasks projectTasks)
         {
+            projectTasks.CreatedOn = DateTime.Now;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -161,6 +163,8 @@ namespace BugTrack.Controllers
         [ResponseType(typeof(ProjectTasks))]
         public IHttpActionResult PostProjectTasks(ProjectTasks projectTasks)
         {
+            projectTasks.CreatedOn = DateTime.Now;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

@@ -271,9 +271,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App\app.js" />
-    <Content Include="App\app2.js" />
     <Content Include="App\index.html" />
-    <Content Include="App\index2.html" />
     <Content Include="App\MainController.js" />
     <Content Include="App\stTable.js" />
     <Content Include="Content\ajax-loader.gif" />

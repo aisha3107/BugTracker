@@ -8,6 +8,10 @@ app.component('children', {
                 '<p>{{$ctrl.item.Name}}</p>' +
                 '<children ng-repeat="elem in $ctrl.item.Nodes" item="elem"></children>' +
                 '</div>',
+    //template: '<table id="aisha">' +
+    //            '<p>{{$ctrl.item.Id}}</p>' +
+    //            '<children ng-repeat="elem in $ctrl.item.Nodes" item="elem"></children>' +
+    //            '</table>',
     bindings: {
         item: '<'
     }

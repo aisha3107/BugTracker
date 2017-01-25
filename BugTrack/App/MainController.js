@@ -11,12 +11,16 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
     this.statusId = null;
     this.taskTypeId = null;
     var selectedNode = null;
+    this.data2 = null;
+    this.ParentTaskId = null;
+
 
     this.statuses = [
         { id: 1, text: 'В работе' },
         { id: 2, text: 'На тестировании у аналитика' },
         { id: 3, text: 'Протестировано' },
-        { id: 4, text: 'Принято заказчиком' }
+        { id: 4, text: 'Принято заказчиком' },
+        { id: 5, text: 'Запланировано'}
     ];
 
     this.types = [
@@ -24,13 +28,14 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
         { id: 2, text: 'Bug' }
     ];
 
+
+
     $http({
         method: 'GET',
         url: '/api/Projects/?IsIncludeNodes=true'
     }).then(function successCallback(response) {
-        console.log(response.data);
+        console.log("Projects: " + response);
         $scope.data = response.data;
-
 
         // this callback will be called asynchronously
         // when the response is available
@@ -39,6 +44,74 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
         // or server returns response with an error status.
     });
 
+    //$http({
+    //    method: 'GET',
+    //    url: '/api/ProjectTasks'
+    //}).then(function successCallback(response) {
+    //    console.log("data2: " + response);
+    //    $scope.data2 = response.data;
+    //    // this callback will be called asynchronously
+    //    // when the response is available
+    //}, function errorCallback(response) {
+    //    // called asynchronously if an erroroccurs
+    //    // or server returns response with an error status.
+    //});
+
+    this.processData = function (data) {
+        for (var i = 0; i < data.length; i++) {
+            data[i].subTasks = [];
+            if (data[i].ParentTaskId != null) {
+                var index = -1;
+                for (var j = 0; j < data.length; j++) {
+                    if (data[j].Id == data[i].ParentTaskId) index = j;
+                }
+                if (index != -1) {
+                    data[index].subTasks.push(data[i]);
+                }
+            }
+        }
+        var tmp = [];
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].ParentTaskId == null) {
+                tmp.push(data[i]);
+            }
+        }
+        console.log('test', tmp);
+        return tmp;
+    }
+
+    $http.get('/api/ProjectTasks')
+            .then(function (response) {
+                console.log("data2: " + response);
+                self.data2 = self.processData(response.data);
+
+                //calling for all tasks
+                self.ParentTasks = [];
+
+                for (var i = 0; i < response.data.length; i++) {
+                    self.ParentTasks.push({
+                        id: response.data[i].Id,
+                        title: response.data[i].Title
+                    });
+                }
+                console.log(self.ParentTasks);
+
+                //console.log("hi: " , self.data2);
+                //console.log("rod: ", self.ParentTasks);
+
+                //$digest();
+            }, function (response) {
+                console.log(response)
+            });
+
+    //$scope.$watch('def.currentTasks', function (newObj, oldObj) {
+    //    if ($scope.abc && angular.isObject($scope.abc.currentTasks)) {
+    //        console.log('Project-Tasks Selected!!!');
+    //        console.log($scope.abc.currentTasks);
+            
+    //    }
+    //}, false);
+
 
     $scope.$watch('abc.currentNode', function (newObj, oldObj) {
         if ($scope.abc && angular.isObject($scope.abc.currentNode)) {
@@ -46,10 +119,6 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
             console.log($scope.abc.currentNode);
             $scope.selectedNode = $scope.abc.currentNode;
             selectedNode = $scope.selectedNode;
-            //selectedNode = $scope.selectedNode[0].Nodes[0].Id;
-            //selectedNodeInt = parseInt(selectedNode);
-            //selectedNode = Integer.valueOf((String) $scope.selectedNode);
-            //selectedNodeInt = Integer.valueOf((String) selectedNode);
             $scope.loading = true;
             $http({
                 method: 'GET',
@@ -59,10 +128,6 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
                 console.log(response.data[0].Nodes);
                 $scope.dataTasks = response.data[0].Nodes;
                 selectedNode = $scope.dataTasks[0].ProjectId;
-                //selectedTask = $scope.dataTasks[0].Nodes; //not right
-                console.log("dfg: " + selectedTask);
-                //selectedNode = parseInt($scope.dataTasks);
-                //selectedNode = $scope.dataTasks[1].Nodes[0].Id;
                 console.log("Selected node in the GET request: " + selectedNode);
                 // this callback will be called asynchronously
                 // when the response is available
@@ -75,29 +140,7 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
         }
     }, false);
 
-    //$scope.$watch('def.currentNode', function (newObj, oldObj) {
-    //    if ($scope.def && angular.isObject($scope.abc.currentNode)) {
-    //        console.log('Task Selected!!');
-    //        console.log($scope.def.currentNode);
-    //        $scope.selectedTask = $scope.def.currentNode;
-    //        selectedTask= $scope.selectedTask;
-    //        $scope.loading = true;
-    //        $http({
-    //            method: 'GET',
-    //            url: '/api/ProjectTasks/GetTasksHierarchyByProjectId?id=' + $scope.def.currentNode.Id
-    //        }).then(function (response) {
-    //            console.log("sooooop");
-    //            console.log(response.data2[0].Nodes);
-    //            $scope.dataTasks = response.data2[0].Nodes;
-    //            selectedTask = $scope.dataTasks[0].ProjectId;
-    //            console.log("Selected task in the GET request: " + selectedTask);
-    //        }, function errorCallback(response) {
-    //       }).finally(function () {
-    //            $scope.loading = false;
-    //        });
-    //    }
-    //}, false);
-
+ 
 
 
     $scope.count = 0;
@@ -110,9 +153,13 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
             Title: $scope.Title,
             StatusId: self.statusId,
             TaskTypeId: self.taskTypeId,
-            StartedOn: "2017-01-18T16:28:00+06:00",
-            ProjectId: selectedNode
+            StartedOn: $scope.StartedOn,
+            ProjectId: selectedNode,
+            ParentTaskId: self.ParentTaskId
+            //AssignedUserId: $scope.AssignedUserId
         };
+
+        //"2017-01-18T16:28:00+06:00",
 
         //$scope.dataTasks[0].Nodes.push();
         //$scope.Title = '';
@@ -197,57 +244,6 @@ app.controller('MainController', ['$scope', '$http', function ($scope, $http) {
             ]
         }
     ];
-
-    $scope.treedata =
-    [
-        {
-            "label": "User", "id": "role1", "children": [
-              { "label": "subUser1", "id": "role11", "children": [] },
-              {
-                  "label": "subUser2", "id": "role12", "children": [
-                    {
-                        "label": "subUser2-1", "id": "role121", "children": [
-                          { "label": "subUser2-1-1", "id": "role1211", "children": [] },
-                          { "label": "subUser2-1-2", "id": "role1212", "children": [] }
-                        ]
-                    }
-                  ]
-              }
-            ]
-        },
-        { "label": "Admin", "id": "role2", "children": [] },
-        { "label": "Guest", "id": "role3", "children": [] }
-    ];
-
-
-    $scope.companies = [
-                    {
-                        'name': 'Infosys Technologies',
-                        'employees': 125000,
-                        'headoffice': 'Bangalore'
-                    },
-                    {
-                    	'name': 'Cognizant Technologies',
-                    	'employees': 100000,
-                    	'headoffice': 'Bangalore'
-                    },
-	                {
-	                    'name': 'Wipro',
-	                    'employees': 115000,
-	                    'headoffice': 'Bangalore'
-	                },
-		            {
-		                'name': 'Tata Consultancy Services (TCS)',
-		                'employees': 150000,
-		                'headoffice': 'Bangalore'
-		            },
-			        {
-			            'name': 'HCL Technologies',
-			            'employees': 90000,
-			            'headoffice': 'Noida'
-			        },
-    ];
-
 
 
     //console.log($scope.myColl);

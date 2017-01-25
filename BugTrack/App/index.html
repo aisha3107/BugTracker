@@ -116,6 +116,12 @@
             /*text-align:right;*/
             text-orientation: 50px;
         }
+
+        #aisha{
+            border:solid;
+            border-color:red;
+            border-left:1px;
+        }
     </style>
 
 </head>
@@ -125,8 +131,8 @@
         <div class="main" ng-controller="MainController as $ctrl">
             <div class="Wrapper">
                 <div class="w3-container">
-                    <div ng-repeat="product in data" class="col-md-6">
-                        <!--<div class="thumbnail">
+                    <!--<div ng-repeat="product in data" class="col-md-6">
+                        <div class="thumbnail">
                             <p class="title">{{product.Id}}</p>
                             <p class="title">{{product.Name}}</p>
                             <p class="title">{{product.Nodes.length}}</p>
@@ -134,13 +140,13 @@
                                 {{node.Name}}
                                 <br />
                             </div>
-                        </div>-->
-                    </div>
+                        </div>
+                    </div>-->
                 </div>
 
-                <!--div>
-                    <children ng-repeat="elem in data" item="elem"></children>
-                </div>-->
+
+                <!--<children ng-repeat="elem in data" item="elem"></children>-->
+
             </div>
 
 
@@ -164,12 +170,12 @@
 
             <div class="w3-container RightCol">
                 здесь форма для заполнения
-                <br />
                 {{selectedNode.Id}}
 
                 <br />
                 <br />
                 Edit of index: {{$ctrl.value.Id}}
+                <br />
                 <br />
 
                 <form class="form-horizontal" role="form" ng-submit="addNew()">
@@ -177,11 +183,27 @@
                         <tr>
                             <td>Задание:</td>
                             <td>
-                                <input type="text" name="Title" style="width:235px"
+                                <input type="text" name="Title" style="width:240px"
                                        class="form-control" ng-model="Title" />
                             </td>
-
                         </tr>
+
+                        <tr>
+                            <td>Выполнит:</td>
+                            <td>
+                                <input type="text" name="AssignedUserId" style="width:240px"
+                                       class="form-control" ng-model="AssignedUserId" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Старт:</td>
+                            <td>
+                                <input type="date" name="StartedOn" style="width:240px"
+                                       class="form-control" ng-model="StartedOn" />
+                            </td>
+                        </tr>
+
                         <tr>
                             <td>Статус:</td>
                             <td>
@@ -189,27 +211,33 @@
                                         ng-model="$ctrl.statusId"
                                         class="form-control"
                                         ng-options="item.id as item.text for item in $ctrl.statuses">
-                                    <option value>Выберите статус...</option>
+                                    <option value="">Выберите статус...</option>
                                 </select>
                             </td>
                         </tr>
+
                         <tr>
                             <td>Тип:</td>
                             <td>
                                 <select name="TaskTypeName"
-                                        style="width:235px"
+                                        style="width:240px"
                                         class="form-control"
                                         ng-model="$ctrl.taskTypeId"
                                         ng-options="item.id as item.text for item in $ctrl.types">
                                     <option value>Выберите тип...</option>
                                 </select>
                             </td>
-                        </tr>
+                        </tr>                        
+
                         <tr>
-                            <td>ParentID:</td>
+                            <td>ParentTask:</td>
                             <td>
-                                <input type="text" name="ParentTaskId" style="width:235px"
-                                       class="form-control" ng-model="ParentTaskId" />
+                                <select name="ParentTaskName"
+                                        ng-model="$ctrl.ParentTaskId"
+                                        class="form-control"
+                                        ng-options="item.id as item.title for item in $ctrl.ParentTasks">
+                                    <option value="">Выберите родительское задание...</option>
+                                </select>
                             </td>
                         </tr>
                     </table>
@@ -220,14 +248,15 @@
 
 
             <div>
-                    <input type="button" value="Create new task" style="margin-left:694px; width:200px" />
+                <input type="button" value="Create new task" style="margin-left:694px; width:200px" />
             </div>
             <br />
             <div class="w3-container Mid" ng-class="{loading:loading}">
                 <!--<div>
                     <button ng-click="addNew()" class="btn btn-small btn-primary">create new task</button>
                 </div>-->
-                <table st-table="rowCollection" class="w3-table-all table-nested">
+
+                <!--<table st-table="rowCollection" class="w3-table-all table-nested">
                     <thead>
                         <tr>
                             <th st-sort="ID">ID</th>
@@ -239,14 +268,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--<tr>
-                            <td data-angular-treeview="true"
-                                data-tree-id="def"
-                                data-tree-model="data2"
-                                data-node-id="Name"
-                                data-node-label="Name"
-                                data-node-children="Nodes"></td>
-                        </tr>-->
+
                         <tr ng-repeat="value in dataTasks">
                            <td>{{value.Id}}</td>
                             <td>{{value.Title}}</td>
@@ -254,9 +276,6 @@
                             <td>{{value.TaskTypeName}}</td>
                             <td><button ng-click="editUser()" class="btn btn-small btn-primary">edit</button></td>
                             <td><button ng-click="remove()" class="btn btn-primary">Delete</button></td>
-                            <!--<td><table>
-                                <tr>dfdgfgh</tr>
-                                </table></td>-->
                         </tr>
 
 
@@ -278,79 +297,26 @@
                             <td><button ng-click="remove()" class="btn btn-primary">Delete</button></td>
                         </tr>
                     </tbody>
-                </table>
+                </table>-->
+
+                <br />
+                <div data-angular-treeview="true"
+                     data-tree-id="abc"
+                     data-tree-model="$ctrl.data2"
+                     data-node-id="Id"
+                     data-node-label="Title"
+                     data-node-children="subTasks">
+                </div>
             </div>
-
-
-
-
-            <!--<form
-            class="form-horizontal" role="form" ng-submit="addRow()">
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Name</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="name"
-                               ng-model="name" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Employees</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="employees"
-                               ng-model="employees" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-2 control-label">Headoffice</label>
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="headoffice"
-                               ng-model="headoffice" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div style="padding-left:110px">
-                        <input type="submit" value="Submit" class="btn btn-primary" />
-                    </div>
-                </div>
-            </form>-->
-            <br />
-            <br />
-            <!--<div>
-                <table class="table">
-                    <tr>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Employees
-                        </th>
-                        <th>
-                            Head Office
-                        </th>
-                    </tr>
-                    <tr ng-repeat="company in companies">
-                        <td>
-                            {{company.name}}
-                        </td>
-                        <td>
-                            {{company.employees}}
-                        </td>
-                        <td>
-                            {{company.headoffice}}
-                        </td>
-                    </tr>
-                </table>
-            </div>-->
-
         </div>
-    </div>
+        </div>
 
-    <!-- Modules -->
-    <script src="app.js"></script>
+        <!-- Modules -->
+        <script src="app.js"></script>
 
-    <!-- Controllers -->
-    <script src="MainController.js"></script>
+        <!-- Controllers -->
+        <script src="MainController.js"></script>
 
-    <!--<script src="stTable.js"></script>-->
+        <!--<script src="stTable.js"></script>-->
 </body>
 </html>
